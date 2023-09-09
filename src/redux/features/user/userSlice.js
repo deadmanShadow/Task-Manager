@@ -10,7 +10,7 @@ const initialState = {
   error: '',
 };
 
-export const createUser = createAsyncThunk("userSlice/createUser", 
+export const createUser = createAsyncThunk("userSlice/createUser",
   async ({ email, password, name }) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser, {
@@ -27,7 +27,15 @@ export const createUser = createAsyncThunk("userSlice/createUser",
 const userSlice = createSlice({
   name: 'userSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, { payload }) => {
+      state.name = payload.name;
+      state.email = payload.email;
+    },
+    toggleLoading : (state, {payload}) => {
+      state.isLoading = payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(createUser.pending, (state) => {
       state.isLoading = true;
@@ -36,7 +44,7 @@ const userSlice = createSlice({
       state.name = '';
       state.error = '';
     });
-    builder.addCase(createUser.fulfilled, (state, {payload}) => {
+    builder.addCase(createUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.isError = false;
       state.email = payload.email;
@@ -52,5 +60,7 @@ const userSlice = createSlice({
     });
   },
 });
+
+export const { setUser, toggleLoading } = userSlice.actions;
 
 export default userSlice.reducer;
