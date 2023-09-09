@@ -5,6 +5,19 @@ const TaskCard = ({ task }) => {
 
   const [updateTask, {data,error}] = useUpdateTaskMutation();
 
+  const handleUpdate = (id, updatedStatus) => {
+
+    const data = {
+      status: updatedStatus,
+    };
+
+    const options = {
+      id: id,
+      data: data
+    };
+    updateTask(options);
+  }
+
     console.log(data);
     console.log(error);
   let updatedStatus;
@@ -37,7 +50,7 @@ const TaskCard = ({ task }) => {
           </button>
           <button
             onClick={() =>
-              updateTask({ id: task._id, data: {status: updatedStatus} })}
+              handleUpdate(task._id, updatedStatus)}
             title="Update Status"
           >
             <ArrowRightIcon className="h-5 w-5 text-primary" />
