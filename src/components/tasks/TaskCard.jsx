@@ -1,5 +1,5 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useUpdateTaskMutation } from '../../redux/features/api/baseApi';
+import { useUpdateTaskMutation } from '../../redux/features/tasks/tasksApi';
 
 const TaskCard = ({ task }) => {
 
@@ -18,8 +18,6 @@ const TaskCard = ({ task }) => {
     updateTask(options);
   }
 
-    console.log(data);
-    console.log(error);
   let updatedStatus;
 
   if (task.status === 'pending') {
